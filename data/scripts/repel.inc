@@ -98,7 +98,7 @@ EventScript_UsedLure:
 	release
 	end
 
-Text_RepelWoreOff:
+Text_RepelWoreOff: @ 82A4B33
 	.string "REPEL's effect wore off…$"
 
 Text_UseAnotherRepel::
