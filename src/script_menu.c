@@ -105,8 +105,8 @@ static void DrawMultichoiceMenuCustom(u8 left, u8 top, u8 multichoiceId, u8 igno
     windowId = CreateWindowFromRect(left, top, newWidth, count * 2);
     SetStandardWindowBorderStyle(windowId, 0);
     PrintMenuTable(windowId, count, actions);
-    InitMenuInUpperLeftCornerPlaySoundWhenAPressed(windowId, count, cursorPos);
-    schedule_bg_copy_tilemap_to_vram(0);
+    InitMenuInUpperLeftCornerNormal(windowId, count, cursorPos);
+    ScheduleBgCopyTilemapToVram(0);
     InitMultichoiceCheckWrap(ignoreBPress, count, windowId, multichoiceId);
 }
 
