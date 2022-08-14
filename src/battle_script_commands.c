@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_message.h"
+#include "battle_main.h"
 #include "battle_anim.h"
 #include "battle_ai_main.h"
 #include "battle_ai_util.h"
@@ -3798,8 +3799,15 @@ static void Cmd_tryfaintmon(void)
                 gHitMarker |= HITMARKER_PLAYER_FAINTED;
                 if (gBattleResults.playerFaintCounter < 255)
                     gBattleResults.playerFaintCounter++;
-                AdjustFriendshipOnBattleFaint(battler);
-                gSideTimers[B_SIDE_PLAYER].retaliateTimer = 2;
+                if (FlagGet(FLAG_NUZ_FAINT_DELETE))
+                {
+                    ZeroMonData(&gPlayerParty[gBattlerPartyIndexes[battler]]);
+                }
+                else
+                {
+                    AdjustFriendshipOnBattleFaint(battler);
+                }
+                gSideTimers[0].retaliateTimer = 2;
             }
             else
             {
