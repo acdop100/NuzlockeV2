@@ -17,6 +17,7 @@
 #include "mystery_event_menu.h"
 #include "naming_screen.h"
 #include "option_menu.h"
+#include "nuzlocke_option_menu.h"
 #include "overworld.h"
 #include "palette.h"
 #include "pokeball.h"
@@ -36,6 +37,7 @@
 #include "title_screen.h"
 #include "window.h"
 #include "mystery_gift_menu.h"
+
 
 /*
  * Main menu state machine
@@ -307,6 +309,16 @@ static const struct WindowTemplate sWindowTemplates_MainMenu[] =
         .paletteNum = 15,
         .baseBlock = 0x35
     },
+    // NUZLOCKE OPTIONS
+    {
+        .bg = 0,
+        .tilemapLeft = MENU_LEFT,
+        .tilemapTop = MENU_TOP_WIN4,
+        .width = MENU_WIDTH,
+        .height = MENU_HEIGHT_WIN4,
+        .paletteNum = 15,
+        .baseBlock = 0x70
+    },
     // Has saved game
     // CONTINUE
     {
@@ -518,6 +530,7 @@ enum
     ACTION_NEW_GAME,
     ACTION_CONTINUE,
     ACTION_OPTION,
+    ACTION_NUZLOCKE_OPTION,
     ACTION_MYSTERY_GIFT,
     ACTION_MYSTERY_EVENTS,
     ACTION_EREADER,
@@ -671,6 +684,8 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
             switch (tMenuType)  // if so, highlight the OPTIONS item
             {
                 case HAS_NO_SAVED_GAME:
+                    sCurrItemAndOptionMenuCheck = tMenuType + 1;
+                    break;
                 case HAS_SAVED_GAME:
                     sCurrItemAndOptionMenuCheck = tMenuType + 1;
                     break;
@@ -684,7 +699,7 @@ static void Task_MainMenuCheckSaveFile(u8 taskId)
         }
         sCurrItemAndOptionMenuCheck &= ~OPTION_MENU_FLAG;  // turn off the "returning from options menu" flag
         tCurrItem = sCurrItemAndOptionMenuCheck;
-        tItemCount = tMenuType + 2;
+        tItemCount = tMenuType + 3;
     }
 }
 
@@ -780,14 +795,19 @@ static void Task_DisplayMainMenu(u8 taskId)
             default:
                 FillWindowPixelBuffer(0, PIXEL_FILL(0xA));
                 FillWindowPixelBuffer(1, PIXEL_FILL(0xA));
+                FillWindowPixelBuffer(4, PIXEL_FILL(0xA));
                 AddTextPrinterParameterized3(0, FONT_NORMAL, 0, 1, sTextColor_Headers, TEXT_SKIP_DRAW, gText_MainMenuNewGame);
                 AddTextPrinterParameterized3(1, FONT_NORMAL, 0, 1, sTextColor_Headers, TEXT_SKIP_DRAW, gText_MainMenuOption);
+                AddTextPrinterParameterized3(4, FONT_NORMAL, 0, 1, sTextColor_Headers, TEXT_SKIP_DRAW, gText_MainMenuNuzlockeOption);
                 PutWindowTilemap(0);
                 PutWindowTilemap(1);
+                PutWindowTilemap(4);
                 CopyWindowToVram(0, COPYWIN_GFX);
                 CopyWindowToVram(1, COPYWIN_GFX);
+                CopyWindowToVram(4, COPYWIN_GFX);
                 DrawMainMenuWindowBorder(&sWindowTemplates_MainMenu[0], MAIN_MENU_BORDER_TILE);
                 DrawMainMenuWindowBorder(&sWindowTemplates_MainMenu[1], MAIN_MENU_BORDER_TILE);
+                DrawMainMenuWindowBorder(&sWindowTemplates_MainMenu[4], MAIN_MENU_BORDER_TILE);
                 break;
             case HAS_SAVED_GAME:
                 FillWindowPixelBuffer(2, PIXEL_FILL(0xA));
@@ -961,6 +981,9 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
                     case 1:
                         action = ACTION_OPTION;
                         break;
+                    case 2:
+                        action = ACTION_NUZLOCKE_OPTION;
+                        break;
                 }
                 break;
             case HAS_SAVED_GAME:
@@ -1069,6 +1092,11 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
                 SetMainCallback2(CB2_InitOptionMenu);
                 DestroyTask(taskId);
                 break;
+            case ACTION_NUZLOCKE_OPTION:
+                gMain.savedCallback = CB2_ReinitMainMenu;
+                SetMainCallback2(CB2_InitNuzlockeOptionMenu);
+                DestroyTask(taskId);
+                break;
             case ACTION_MYSTERY_GIFT:
                 SetMainCallback2(CB2_InitMysteryGift);
                 DestroyTask(taskId);
@@ -1096,7 +1124,7 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
                 return;
         }
         FreeAllWindowBuffers();
-        if (action != ACTION_OPTION)
+        if (action != ACTION_OPTION || action != ACTION_NUZLOCKE_OPTION)
             sCurrItemAndOptionMenuCheck = 0;
         else
             sCurrItemAndOptionMenuCheck |= OPTION_MENU_FLAG;  // entering the options menu
@@ -1180,6 +1208,9 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
                     break;
                 case 1:
                     SetGpuReg(REG_OFFSET_WIN0V, MENU_WIN_VCOORDS(1));
+                    break;
+                case 2:
+                    SetGpuReg(REG_OFFSET_WIN0V, MENU_WIN_VCOORDS(3));
                     break;
             }
             break;

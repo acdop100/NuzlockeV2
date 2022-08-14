@@ -24,6 +24,7 @@ const u8 gText_ProfBirchMatchCallName[] = _("PROF. BIRCH");
 const u8 gText_MainMenuNewGame[] = _("NEW GAME");
 const u8 gText_MainMenuContinue[] = _("CONTINUE");
 const u8 gText_MainMenuOption[] = _("OPTION");
+const u8 gText_MainMenuNuzlockeOption[] = _("NUZLOCKE OPTIONS");
 const u8 gText_MainMenuMysteryGift[] = _("MYSTERY GIFT");
 const u8 gText_MainMenuMysteryGift2[] = _("MYSTERY GIFT");
 const u8 gText_MainMenuMysteryEvents[] = _("MYSTERY EVENTS");

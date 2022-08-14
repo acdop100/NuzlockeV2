@@ -3641,7 +3641,14 @@ static void Cmd_tryfaintmon(void)
                 gHitMarker |= HITMARKER_PLAYER_FAINTED;
                 if (gBattleResults.playerFaintCounter < 255)
                     gBattleResults.playerFaintCounter++;
-                ZeroMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]]);
+                if (FlagGet(FLAG_NUZ_FAINT_DELETE))
+                {
+                    ZeroMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]]);
+                }
+                else
+                {
+                    AdjustFriendshipOnBattleFaint(gActiveBattler);
+                }
                 gSideTimers[0].retaliateTimer = 2;
             }
             else

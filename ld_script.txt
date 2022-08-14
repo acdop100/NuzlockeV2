@@ -146,6 +146,7 @@ SECTIONS {
         src/field_effect.o(.text);
         src/scanline_effect.o(.text);
         src/option_menu.o(.text);
+        src/nuzlocke_option_menu.o(.text);
         src/pokedex.o(.text);
         src/trainer_card.o(.text);
         src/frontier_pass.o(.text);
@@ -532,6 +533,7 @@ SECTIONS {
         src/field_effect.o(.rodata);
         src/scanline_effect.o(.rodata);
         src/option_menu.o(.rodata);
+        src/nuzlocke_option_menu.o(.rodata);
         src/pokedex.o(.rodata);
         src/trainer_card.o(.rodata);
         src/frontier_pass.o(.rodata);

@@ -1,0 +1,6 @@
+#ifndef GUARD_NUZLOCKE_OPTION_MENU_H
+#define GUARD_NUZLOCKE_OPTION_MENU_H
+
+void CB2_InitNuzlockeOptionMenu(void);
+
+#endif // GUARD_NUZLOCKE_OPTION_MENU_H
