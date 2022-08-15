@@ -520,6 +520,10 @@ struct SaveBlock2
     /*0x57C*/ struct RankingHall2P hallRecords2P[FRONTIER_LVL_MODE_COUNT][HALL_RECORDS_COUNT]; // From record mixing.
     /*0x624*/ u16 contestLinkResults[CONTEST_CATEGORIES_COUNT][CONTESTANT_COUNT];
     /*0x64C*/ struct BattleFrontier frontier;
+              u16 nuzOptionsDeleteMon:1;
+              u16 nuzOptionsDeleteWO:1;
+              u16 nuzOptionsSingleCatch:1;
+              u16 nuzOptionsStarterChoose:1;
 }; // sizeof=0xF2C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;

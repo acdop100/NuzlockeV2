@@ -23,6 +23,7 @@
 #include "window.h"
 #include "constants/songs.h"
 #include "constants/rgb.h"
+#include "constants/flags.h"
 
 #define STARTER_MON_COUNT   3
 
@@ -373,93 +374,125 @@ static void VblankCB_StarterChoose(void)
 
 void CB2_ChooseStarter(void)
 {
-    u8 taskId;
-    u8 spriteId;
+    // Does the player want to choose their own starter? 
+    if (FlagGet(FLAG_CHOOSE_STARTER))
+    {
+        // Get Last digit of the trainer's ID
+        u16 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 1;
+        u16 pokemonChosen;
 
-    SetVBlankCallback(NULL);
+        // Chose pokemon based on the digit 
+        if (lastDigit < 4)
+        {
+            pokemonChosen = SPECIES_TREECKO;
+        }
+        else if (lastDigit < 7)
+        {
+            pokemonChosen = SPECIES_TORCHIC;
+        }
+        else if (lastDigit < 10)
+        {
+            pokemonChosen = SPECIES_MUDKIP;
+        }
+        else
+        {
+            pokemonChosen = SPECIES_PIKACHU;
+        }
 
-    SetGpuReg(REG_OFFSET_DISPCNT, 0);
-    SetGpuReg(REG_OFFSET_BG3CNT, 0);
-    SetGpuReg(REG_OFFSET_BG2CNT, 0);
-    SetGpuReg(REG_OFFSET_BG1CNT, 0);
-    SetGpuReg(REG_OFFSET_BG0CNT, 0);
+        gSpecialVar_Result = pokemonChosen;
+        ResetAllPicSprites();
+        SetMainCallback2(gMain.savedCallback);
+    }
+    else
+    {
+        u8 taskId;
+        u8 spriteId;
 
-    ChangeBgX(0, 0, BG_COORD_SET);
-    ChangeBgY(0, 0, BG_COORD_SET);
-    ChangeBgX(1, 0, BG_COORD_SET);
-    ChangeBgY(1, 0, BG_COORD_SET);
-    ChangeBgX(2, 0, BG_COORD_SET);
-    ChangeBgY(2, 0, BG_COORD_SET);
-    ChangeBgX(3, 0, BG_COORD_SET);
-    ChangeBgY(3, 0, BG_COORD_SET);
+        SetVBlankCallback(NULL);
 
-    DmaFill16(3, 0, VRAM, VRAM_SIZE);
-    DmaFill32(3, 0, OAM, OAM_SIZE);
-    DmaFill16(3, 0, PLTT, PLTT_SIZE);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        SetGpuReg(REG_OFFSET_BG3CNT, 0);
+        SetGpuReg(REG_OFFSET_BG2CNT, 0);
+        SetGpuReg(REG_OFFSET_BG1CNT, 0);
+        SetGpuReg(REG_OFFSET_BG0CNT, 0);
 
-    LZ77UnCompVram(gBirchBagGrass_Gfx, (void *)VRAM);
-    LZ77UnCompVram(gBirchBagTilemap, (void *)(BG_SCREEN_ADDR(6)));
-    LZ77UnCompVram(gBirchGrassTilemap, (void *)(BG_SCREEN_ADDR(7)));
+        ChangeBgX(0, 0, BG_COORD_SET);
+        ChangeBgY(0, 0, BG_COORD_SET);
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ChangeBgX(2, 0, BG_COORD_SET);
+        ChangeBgY(2, 0, BG_COORD_SET);
+        ChangeBgX(3, 0, BG_COORD_SET);
+        ChangeBgY(3, 0, BG_COORD_SET);
 
-    ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
-    InitWindows(sWindowTemplates);
+        DmaFill16(3, 0, VRAM, VRAM_SIZE);
+        DmaFill32(3, 0, OAM, OAM_SIZE);
+        DmaFill16(3, 0, PLTT, PLTT_SIZE);
 
-    DeactivateAllTextPrinters();
-    LoadUserWindowBorderGfx(0, 0x2A8, BG_PLTT_ID(13));
-    ClearScheduledBgCopiesToVram();
-    ScanlineEffect_Stop();
-    ResetTasks();
-    ResetSpriteData();
-    ResetPaletteFade();
-    FreeAllSpritePalettes();
-    ResetAllPicSprites();
+        LZ77UnCompVram(gBirchHelpGfx, (void *)VRAM);
+        LZ77UnCompVram(gBirchBagTilemap, (void *)(BG_SCREEN_ADDR(6)));
+        LZ77UnCompVram(gBirchGrassTilemap, (void *)(BG_SCREEN_ADDR(7)));
 
-    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
-    LoadPalette(gBirchBagGrass_Pal, BG_PLTT_ID(0), sizeof(gBirchBagGrass_Pal));
-    LoadCompressedSpriteSheet(&sSpriteSheet_PokeballSelect[0]);
-    LoadCompressedSpriteSheet(&sSpriteSheet_StarterCircle[0]);
-    LoadSpritePalettes(sSpritePalettes_StarterChoose);
-    BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+        InitWindows(sWindowTemplates);
 
-    EnableInterrupts(DISPSTAT_VBLANK);
-    SetVBlankCallback(VblankCB_StarterChoose);
-    SetMainCallback2(CB2_StarterChoose);
+        DeactivateAllTextPrinters();
+        LoadUserWindowBorderGfx(0, 0x2A8, 0xD0);
+        ClearScheduledBgCopiesToVram();
+        ScanlineEffect_Stop();
+        ResetTasks();
+        ResetSpriteData();
+        ResetPaletteFade();
+        FreeAllSpritePalettes();
+        ResetAllPicSprites();
 
-    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
-    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ);
-    SetGpuReg(REG_OFFSET_WIN0H, 0);
-    SetGpuReg(REG_OFFSET_WIN0V, 0);
-    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN);
-    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
-    SetGpuReg(REG_OFFSET_BLDY, 7);
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        LoadPalette(GetOverworldTextboxPalettePtr(), 0xE0, 0x20);
+        LoadPalette(gBirchBagGrass_Pal, 0, 0x40);
+        LoadCompressedSpriteSheet(&sSpriteSheet_PokeballSelect[0]);
+        LoadCompressedSpriteSheet(&sSpriteSheet_StarterCircle[0]);
+        LoadSpritePalettes(sSpritePalettes_StarterChoose);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
 
-    ShowBg(0);
-    ShowBg(2);
-    ShowBg(3);
+        EnableInterrupts(DISPSTAT_VBLANK);
+        SetVBlankCallback(VblankCB_StarterChoose);
+        SetMainCallback2(CB2_StarterChoose);
 
-    taskId = CreateTask(Task_StarterChoose, 0);
-    gTasks[taskId].tStarterSelection = 1;
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ);
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 7);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
 
-    // Create hand sprite
-    spriteId = CreateSprite(&sSpriteTemplate_Hand, 120, 56, 2);
-    gSprites[spriteId].data[0] = taskId;
+        ShowBg(0);
+        ShowBg(2);
+        ShowBg(3);
 
-    // Create three Pokeball sprites
-    spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[0][0], sPokeballCoords[0][1], 2);
-    gSprites[spriteId].sTaskId = taskId;
-    gSprites[spriteId].sBallId = 0;
+        taskId = CreateTask(Task_StarterChoose, 0);
+        gTasks[taskId].tStarterSelection = 1;
 
-    spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[1][0], sPokeballCoords[1][1], 2);
-    gSprites[spriteId].sTaskId = taskId;
-    gSprites[spriteId].sBallId = 1;
+        // Create hand sprite
+        spriteId = CreateSprite(&sSpriteTemplate_Hand, 120, 56, 2);
+        gSprites[spriteId].data[0] = taskId;
 
-    spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[2][0], sPokeballCoords[2][1], 2);
-    gSprites[spriteId].sTaskId = taskId;
-    gSprites[spriteId].sBallId = 2;
+        // Create three Pokeball sprites
+        spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[0][0], sPokeballCoords[0][1], 2);
+        gSprites[spriteId].sTaskId = taskId;
+        gSprites[spriteId].sBallId = 0;
 
-    sStarterLabelWindowId = WINDOW_NONE;
+        spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[1][0], sPokeballCoords[1][1], 2);
+        gSprites[spriteId].sTaskId = taskId;
+        gSprites[spriteId].sBallId = 1;
+
+        spriteId = CreateSprite(&sSpriteTemplate_Pokeball, sPokeballCoords[2][0], sPokeballCoords[2][1], 2);
+        gSprites[spriteId].sTaskId = taskId;
+        gSprites[spriteId].sBallId = 2;
+
+        sStarterLabelWindowId = WINDOW_NONE;
+    }
 }
 
 static void CB2_StarterChoose(void)

@@ -96,6 +96,10 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
+    gSaveBlock2Ptr->nuzOptionsDeleteMon = OPTIONS_DELETE_MON_ON;
+    gSaveBlock2Ptr->nuzOptionsDeleteWO = OPTIONS_DELETE_WO_ON;
+    gSaveBlock2Ptr->nuzOptionsSingleCatch = OPTIONS_SINGLE_CATCH_ON;
+    gSaveBlock2Ptr->nuzOptionsStarterChoose = OPTIONS_SINGLE_CATCH_OFF;
 }
 
 static void ClearPokedexFlags(void)
