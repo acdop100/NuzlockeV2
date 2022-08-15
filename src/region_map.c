@@ -627,10 +627,6 @@ void SetRegionToNoCatch(u16 mapSecId)
 
 bool8 HasCaughtMonInRegion(u16 mapSecId)
 {
-    // u8 i = 0;
-    // u8 j = 0;
-    // u8 p = 0;
-
     if (sRegionMapSectionWhereCaught[mapSecId] == 0)
     {
         return(FALSE);
@@ -639,30 +635,6 @@ bool8 HasCaughtMonInRegion(u16 mapSecId)
     {
         return(TRUE);
     }
-
-    // for (p; p < 6; p++)
-    // {
-    //     u16 species = GetMonData(&gPlayerParty[p], MON_DATA_SPECIES2);
-    //     if (species == SPECIES_NONE || species == SPECIES_EGG)
-    //             continue;
-    //         else
-    //             if (GetMonData(&gPlayerParty[p], MON_DATA_MET_LOCATION) == mapSecId)
-    //                 return(TRUE);
-    // }
-
-    // for (i; i < TOTAL_BOXES_COUNT; i++) 
-    // {
-    //     for (j; j < IN_BOX_COUNT; j++) 
-    //     {
-    //         u16 species = GetBoxMonDataAt(i, j, MON_DATA_SPECIES2);
-    //         if (species == SPECIES_NONE || species == SPECIES_EGG)
-    //             continue;
-    //         else
-    //             if (GetBoxMonDataAt(i, j, MON_DATA_MET_LOCATION) == mapSecId)
-    //                 return(TRUE);
-    //     }
-    // }
-    //return(FALSE);
 }
 
 void InitRegionMap(struct RegionMap *regionMap, bool8 zoomed)
