@@ -1478,6 +1478,9 @@ const u8 gText_Option[] = _("OPTION");
 const u8 gText_TextSpeed[] = _("TEXT SPEED");
 const u8 gText_BattleScene[] = _("BATTLE SCENE");
 const u8 gText_BattleStyle[] = _("BATTLE STYLE");
+const u8 gText_FaintDelete[] = _("FAINT DELETE");
+const u8 gText_WODelete[] = _("WHITEOUT RESET");
+const u8 gText_SingleCatch[] = _("SINGLE CATCH");
 const u8 gText_Sound[] = _("SOUND");
 const u8 gText_Frame[] = _("FRAME");
 const u8 gText_OptionMenuCancel[] = _("CANCEL");
@@ -1487,6 +1490,14 @@ const u8 gText_TextSpeedMid[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MID");
 const u8 gText_TextSpeedFast[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}FAST");
 const u8 gText_BattleSceneOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 const u8 gText_BattleSceneOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+
+const u8 gText_NuzDeleteMonOnFaintOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
+const u8 gText_NuzDeleteMonOnFaintOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+const u8 gText_NuzDeleteOnwhiteoutOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
+const u8 gText_NuzDeleteOnwhiteoutOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+const u8 gText_NuzSingleCatchOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
+const u8 gText_NuzSingleCatchOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+
 const u8 gText_BattleStyleShift[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SHIFT");
 const u8 gText_BattleStyleSet[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SET");
 const u8 gText_SoundMono[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MONO");

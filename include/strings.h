@@ -38,6 +38,16 @@ extern const u8 gText_Cute[];
 extern const u8 gText_Smart[];
 extern const u8 gText_Tough[];
 
+extern const u8 gText_NuzDeleteMonOnFaintOn[];
+extern const u8 gText_NuzDeleteMonOnFaintOff[];
+extern const u8 gText_NuzDeleteOnwhiteoutOn[];
+extern const u8 gText_NuzDeleteOnwhiteoutOff[];
+extern const u8 gText_NuzSingleCatchOn[];
+extern const u8 gText_NuzSingleCatchOff[];
+extern const u8 gText_FaintDelete[];
+extern const u8 gText_WODelete[];
+extern const u8 gText_SingleCatch[];
+
 extern const u8 gText_Normal[];
 extern const u8 gText_Super[];
 extern const u8 gText_Hyper[];
