@@ -1,5 +1,5 @@
 #include "global.h"
-#include "option_menu.h"
+#include "nuzlocke_option_menu.h"
 #include "main.h"
 #include "menu.h"
 #include "constants/flags.h"
@@ -24,6 +24,7 @@ enum
     TD_MENUSELECTION,
     TD_DELETEMON,
     TD_DELETEWO,
+    TD_STARTERCHOOSE,
     TD_SINGLECATCH,
 };
 
@@ -33,6 +34,7 @@ enum
     MENUITEM_DELETEMON,
     MENUITEM_DELETEWO,
     MENUITEM_SINGLECATCH,
+    MENUITEM_STARTERCHOOSE,
     MENUITEM_CANCEL,
     MENUITEM_COUNT,
 };
@@ -44,10 +46,11 @@ enum
     WIN_OPTIONS
 };
 
-#define YPOS_DELETEMON    (MENUITEM_DELETEMON * 16)
-#define YPOS_DELETEWO     (MENUITEM_DELETEWO * 16)
-#define YPOS_SINGLECATCH  (MENUITEM_SINGLECATCH * 16)
-#define YPOS_FRAMETYPE    (MENUITEM_FRAMETYPE * 16)
+#define YPOS_DELETEMON      (MENUITEM_DELETEMON * 16)
+#define YPOS_DELETEWO       (MENUITEM_DELETEWO * 16)
+#define YPOS_SINGLECATCH    (MENUITEM_SINGLECATCH * 16)
+#define YPOS_STARTERCHOOSE  (MENUITEM_STARTERCHOOSE * 16)
+#define YPOS_FRAMETYPE      (MENUITEM_FRAMETYPE * 16)
 
 // this file's functions
 static void Task_OptionMenuFadeIn(u8 taskId);
@@ -61,6 +64,8 @@ static u8   DeleteMon_ProcessInput(u8 selection);
 static void DeleteMon_DrawChoices(u8 selection);
 static u8   SingleCatch_ProcessInput(u8 selection);
 static void SingleCatch_DrawChoices(u8 selection);
+static u8   StarterChoose_ProcessInput(u8 selection);
+static void StarterChoose_DrawChoices(u8 selection);
 static void DrawTextOption(void);
 static void DrawOptionMenuTexts(void);
 static void DrawBgWindowFrames(void);
@@ -73,10 +78,11 @@ static const u8 sEqualSignGfx[] = INCBIN_U8("graphics/interface/option_menu_equa
 
 static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 {
-    [MENUITEM_DELETEMON]    = gText_FaintDelete,
-    [MENUITEM_DELETEWO]     = gText_WODelete,
-    [MENUITEM_SINGLECATCH]  = gText_SingleCatch,
-    [MENUITEM_CANCEL]       = gText_OptionMenuCancel,
+    [MENUITEM_DELETEMON]        = gText_FaintDelete,
+    [MENUITEM_DELETEWO]         = gText_WODelete,
+    [MENUITEM_SINGLECATCH]      = gText_SingleCatch,
+    [MENUITEM_STARTERCHOOSE]    = gText_StarterChoose,
+    [MENUITEM_CANCEL]           = gText_OptionMenuCancel,
 };
 
 static const struct WindowTemplate sOptionMenuWinTemplates[] =
@@ -224,10 +230,12 @@ void CB2_InitNuzlockeOptionMenu(void)
         gTasks[taskId].data[TD_DELETEMON] = gSaveBlock2Ptr->nuzOptionsDeleteMon;
         gTasks[taskId].data[TD_DELETEWO] = gSaveBlock2Ptr->nuzOptionsDeleteWO;
         gTasks[taskId].data[TD_SINGLECATCH] = gSaveBlock2Ptr->nuzOptionsSingleCatch;
+         gTasks[taskId].data[TD_STARTERCHOOSE] = gSaveBlock2Ptr->nuzOptionsStarterChoose;
 
         SingleCatch_DrawChoices(gTasks[taskId].data[TD_SINGLECATCH]);
         DeleteMon_DrawChoices(gTasks[taskId].data[TD_DELETEMON]);
         DeleteWO_DrawChoices(gTasks[taskId].data[TD_DELETEWO]);
+        StarterChoose_DrawChoices(gTasks[taskId].data[TD_STARTERCHOOSE]);
         HighlightOptionMenuItem(gTasks[taskId].data[TD_MENUSELECTION]);
 
         CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
@@ -302,6 +310,13 @@ static void Task_OptionMenuProcessInput(u8 taskId)
             if (previousOption != gTasks[taskId].data[TD_DELETEWO])
                 DeleteWO_DrawChoices(gTasks[taskId].data[TD_DELETEWO]);
             break;
+        case MENUITEM_STARTERCHOOSE:
+            previousOption = gTasks[taskId].data[TD_STARTERCHOOSE];
+            gTasks[taskId].data[TD_STARTERCHOOSE] = StarterChoose_ProcessInput(gTasks[taskId].data[TD_STARTERCHOOSE]);
+
+            if (previousOption != gTasks[taskId].data[TD_STARTERCHOOSE])
+                StarterChoose_DrawChoices(gTasks[taskId].data[TD_STARTERCHOOSE]);
+            break;
         default:
             return;
         }
@@ -319,6 +334,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->nuzOptionsSingleCatch = gTasks[taskId].data[TD_SINGLECATCH];
     gSaveBlock2Ptr->nuzOptionsDeleteMon = gTasks[taskId].data[TD_DELETEMON];
     gSaveBlock2Ptr->nuzOptionsDeleteWO = gTasks[taskId].data[TD_DELETEWO];
+    gSaveBlock2Ptr->nuzOptionsStarterChoose = gTasks[taskId].data[TD_STARTERCHOOSE];
 
     if (gSaveBlock2Ptr->nuzOptionsSingleCatch == 0)
     {
@@ -345,6 +361,15 @@ static void Task_OptionMenuSave(u8 taskId)
     else
     {
         FlagClear(FLAG_NUZ_WHITEOUT_DELETE);
+    }
+
+    if (gSaveBlock2Ptr->nuzOptionsStarterChoose == 1)
+    {
+        FlagSet(FLAG_CHOOSE_STARTER);
+    }
+    else
+    {
+        FlagClear(FLAG_CHOOSE_STARTER);
     }
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
@@ -407,6 +432,30 @@ static void SingleCatch_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_NuzSingleCatchOn, 104, YPOS_SINGLECATCH, styles[0]);
     DrawOptionMenuChoice(gText_NuzSingleCatchOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_NuzSingleCatchOff, 198), YPOS_SINGLECATCH, styles[1]);
 }
+
+static u8 StarterChoose_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void StarterChoose_DrawChoices(u8 selection)
+{
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_NuzStarterChooseOn, 104, YPOS_STARTERCHOOSE, styles[0]);
+    DrawOptionMenuChoice(gText_NuzStarterChooseOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_NuzStarterChooseOff, 198), YPOS_STARTERCHOOSE, styles[1]);
+}
+
 
 static u8 DeleteMon_ProcessInput(u8 selection)
 {

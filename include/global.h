@@ -509,6 +509,7 @@ struct SaveBlock2
               u16 nuzOptionsDeleteMon:1;
               u16 nuzOptionsDeleteWO:1;
               u16 nuzOptionsSingleCatch:1;
+              u16 nuzOptionsStarterChoose:1;
 }; // sizeof=0xF2C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;

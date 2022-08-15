@@ -17,6 +17,12 @@ main_menu.c:
 - Added new menu choice: 'NUZLOCKE OPTIONS`
 - This menu gives users the ability to change what parts of the Nuzlocke challenge they want to conquer
 
+globals.h:
+- Added storage spaces for Nuzlocke options
+
+flags.c:
+- added flags for each Nuzlocke feature
+
 nuzlock_options_menu.c:
 - Includes functions necessary to facilitate changing Nuzlocke options
     - `DELETE FAINT`: Deletes a pokemon's data when it faints in battle
@@ -24,3 +30,6 @@ nuzlock_options_menu.c:
     - `WHITEOUT+`: Additional whiteout option to delete the save if you only whiteout your party, even if you have PC pokemon left
     - `SINGLE CATCH`: makes it so you can only catch the first wild pokemon you see on each route
     - `STARTER CHOICE`: Whether you can pick your starter or if it is chosen for you based on your trainer ID
+
+strings.c:
+- Added strings for nuzlocke options menu

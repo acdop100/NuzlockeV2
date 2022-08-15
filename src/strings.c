@@ -1481,6 +1481,7 @@ const u8 gText_BattleStyle[] = _("BATTLE STYLE");
 const u8 gText_FaintDelete[] = _("FAINT DELETE");
 const u8 gText_WODelete[] = _("WHITEOUT RESET");
 const u8 gText_SingleCatch[] = _("SINGLE CATCH");
+const u8 gText_StarterChoose[] = _("CHOOSE STARTER");
 const u8 gText_Sound[] = _("SOUND");
 const u8 gText_Frame[] = _("FRAME");
 const u8 gText_OptionMenuCancel[] = _("CANCEL");
@@ -1497,6 +1498,8 @@ const u8 gText_NuzDeleteOnwhiteoutOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON"
 const u8 gText_NuzDeleteOnwhiteoutOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 const u8 gText_NuzSingleCatchOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 const u8 gText_NuzSingleCatchOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+const u8 gText_NuzStarterChooseOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
+const u8 gText_NuzStarterChooseOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 
 const u8 gText_BattleStyleShift[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SHIFT");
 const u8 gText_BattleStyleSet[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SET");
