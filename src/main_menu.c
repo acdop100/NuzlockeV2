@@ -385,15 +385,15 @@ static const struct WindowTemplate sWindowTemplates_MainMenu[] =
         .baseBlock = 0x16D
     },
     // Error message window
-    {
-        .bg = 0,
-        .tilemapLeft = MENU_LEFT_ERROR,
-        .tilemapTop = MENU_TOP_ERROR,
-        .width = MENU_WIDTH_ERROR,
-        .height = MENU_HEIGHT_ERROR,
-        .paletteNum = 15,
-        .baseBlock = 0x1A1
-    },
+    // {
+    //     .bg = 0,
+    //     .tilemapLeft = MENU_LEFT_ERROR,
+    //     .tilemapTop = MENU_TOP_ERROR,
+    //     .width = MENU_WIDTH_ERROR,
+    //     .height = MENU_HEIGHT_ERROR,
+    //     .paletteNum = 15,
+    //     .baseBlock = 0x1A1
+    // },
     DUMMY_WIN_TEMPLATE
 };
 
@@ -484,20 +484,49 @@ static const struct MenuAction sMenuActions_Gender[] = {
 };
 
 static const u8 *const sMalePresetNames[] = {
-    gText_DefaultNameJeremy,
-    gText_DefaultNameJacob,
-    gText_DefaultNameJoseph,
-    gText_DefaultNameJordan,
-    gText_DefaultNameJosh,
-    gText_DefaultNameJesse,
-    gText_DefaultNameJack,
+    gText_DefaultNameStu,
+    gText_DefaultNameMilton,
+    gText_DefaultNameTom,
+    gText_DefaultNameKenny,
+    gText_DefaultNameReid,
+    gText_DefaultNameJude,
+    gText_DefaultNameJaxson,
+    gText_DefaultNameEaston,
+    gText_DefaultNameWalker,
+    gText_DefaultNameTeru,
+    gText_DefaultNameJohnny,
+    gText_DefaultNameBrett,
+    gText_DefaultNameSeth,
+    gText_DefaultNameTerry,
+    gText_DefaultNameCasey,
+    gText_DefaultNameDarren,
+    gText_DefaultNameLandon,
+    gText_DefaultNameCollin,
+    gText_DefaultNameStanley,
+    gText_DefaultNameQuincy
 };
 
 static const u8 *const sFemalePresetNames[] = {
-    gText_DefaultNameOlivia,
-    gText_DefaultNameAnna,
-    gText_DefaultNameMary,
-    gText_DefaultNameInnia,
+    gText_DefaultNameKimmy,
+    gText_DefaultNameTiara,
+    gText_DefaultNameBella,
+    gText_DefaultNameJayla,
+    gText_DefaultNameAllie,
+    gText_DefaultNameLianna,
+    gText_DefaultNameSara,
+    gText_DefaultNameMonica,
+    gText_DefaultNameCamila,
+    gText_DefaultNameAubree,
+    gText_DefaultNameRuthie,
+    gText_DefaultNameHazel,
+    gText_DefaultNameNadine,
+    gText_DefaultNameTanja,
+    gText_DefaultNameYasmin,
+    gText_DefaultNameNicola,
+    gText_DefaultNameLillie,
+    gText_DefaultNameTerra,
+    gText_DefaultNameLucy,
+    gText_DefaultNameHalie
 };
 
 // .text

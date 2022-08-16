@@ -33,3 +33,27 @@ nuzlock_options_menu.c:
 
 strings.c:
 - Added strings for nuzlocke options menu
+- Added support for changing pokemon name in party menu
+- Changed default trainer names :P
+
+pokemon.c:
+- Changed day/night cycle evolutions to be more in line with current gen games
+
+field_player_avater.c:
+- Added better reflection system
+
+main.c:
+- Replaced vsync call to increase speed/efficiency
+
+event_object_movement.c:
+- Edited `DoGroundEffects` functions to keep camera from making waves
+
+data/scripts/pkmn_center_nurse.inc:
+- Changed healing functionality to be instant when you talk to Nurse Joy
+
+save.h:
+- Increased size of save file space available
+
+party_menu.c:
+- Added support to change pokemon name in party menu
+
