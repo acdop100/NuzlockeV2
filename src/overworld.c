@@ -358,16 +358,43 @@ static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, st
 };
 
 // code
+static EWRAM_DATA u8 i = 0;
+static EWRAM_DATA u8 j = 0;
+static EWRAM_DATA bool8 anyPokemonLeft = FALSE;
 void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
-    #if B_WHITEOUT_MONEY == GEN_3
-    SetMoney(&gSaveBlock1Ptr->money, GetMoney(&gSaveBlock1Ptr->money) / 2);
-    #endif
-    HealPlayerParty();
-    Overworld_ResetStateAfterWhiteOut();
-    SetWarpDestinationToLastHealLocation();
-    WarpIntoMap();
+
+    for (i; i < TOTAL_BOXES_COUNT; i++) 
+    {
+        for (j; j < IN_BOX_COUNT; j++) 
+        {
+            u16 species = GetBoxMonDataAt(i, j, MON_DATA_SPECIES_OR_EGG);
+            if (species == SPECIES_NONE || species == SPECIES_EGG)
+                continue;
+            else
+                anyPokemonLeft = TRUE;
+        }
+    }
+
+    if ((anyPokemonLeft == FALSE && FlagGet(FLAG_NUZ_WHITEOUT_DELETE)) || (FlagGet(FLAG_NUZ_WHITEOUT_DELETE_PLUS)))
+    {
+        ClearSaveData();
+        ResetSafariZoneFlag();
+        NewGameInitData();
+        ResetMenuAndMonGlobals();
+    }
+    else
+    {
+        #if B_WHITEOUT_MONEY == GEN_3
+        SetMoney(&gSaveBlock1Ptr->money, GetMoney(&gSaveBlock1Ptr->money) / 2);
+        #endif
+        HealPlayerParty();
+        Overworld_ResetStateAfterWhiteOut();
+        SetWarpDestinationToLastHealLocation();
+        WarpIntoMap();
+    }
+    
 }
 
 void Overworld_ResetStateAfterFly(void)

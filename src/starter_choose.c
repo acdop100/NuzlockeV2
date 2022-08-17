@@ -429,7 +429,7 @@ void CB2_ChooseStarter(void)
         DmaFill32(3, 0, OAM, OAM_SIZE);
         DmaFill16(3, 0, PLTT, PLTT_SIZE);
 
-        LZ77UnCompVram(gBirchHelpGfx, (void *)VRAM);
+        LZ77UnCompVram(gBirchBagGrass_Gfx, (void *)VRAM);
         LZ77UnCompVram(gBirchBagTilemap, (void *)(BG_SCREEN_ADDR(6)));
         LZ77UnCompVram(gBirchGrassTilemap, (void *)(BG_SCREEN_ADDR(7)));
 
@@ -447,8 +447,8 @@ void CB2_ChooseStarter(void)
         FreeAllSpritePalettes();
         ResetAllPicSprites();
 
-        LoadPalette(GetOverworldTextboxPalettePtr(), 0xE0, 0x20);
-        LoadPalette(gBirchBagGrass_Pal, 0, 0x40);
+        LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
+        LoadPalette(gBirchBagGrass_Pal, BG_PLTT_ID(0), sizeof(gBirchBagGrass_Pal));
         LoadCompressedSpriteSheet(&sSpriteSheet_PokeballSelect[0]);
         LoadCompressedSpriteSheet(&sSpriteSheet_StarterCircle[0]);
         LoadSpritePalettes(sSpritePalettes_StarterChoose);

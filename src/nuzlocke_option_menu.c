@@ -352,50 +352,50 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->nuzOptionsDeleteWOPlus = gTasks[taskId].data[TD_DELETEWOPLUS];
     gSaveBlock2Ptr->nuzOptionsStarterChoose = gTasks[taskId].data[TD_STARTERCHOOSE];
 
-    // if (gSaveBlock2Ptr->nuzOptionsSingleCatch == 0)
-    // {
-    //     FlagSet(FLAG_NUZ_SINGLE_CATCH);
-    // }
-    // else
-    // {
-    //     FlagClear(FLAG_NUZ_SINGLE_CATCH);
-    // }
+    if (gSaveBlock2Ptr->nuzOptionsSingleCatch == 0)
+    {
+        FlagSet(FLAG_NUZ_SINGLE_CATCH);
+    }
+    else
+    {
+        FlagClear(FLAG_NUZ_SINGLE_CATCH);
+    }
 
-    // if (gSaveBlock2Ptr->nuzOptionsDeleteMon == 0)
-    // {
-    //     FlagSet(FLAG_NUZ_FAINT_DELETE);
-    // }
-    // else
-    // {
-    //     FlagClear(FLAG_NUZ_FAINT_DELETE);
-    // }
+    if (gSaveBlock2Ptr->nuzOptionsDeleteMon == 0)
+    {
+        FlagSet(FLAG_NUZ_FAINT_DELETE);
+    }
+    else
+    {
+        FlagClear(FLAG_NUZ_FAINT_DELETE);
+    }
 
-    // if (gSaveBlock2Ptr->nuzOptionsDeleteWO == 0)
-    // {
-    //     FlagSet(FLAG_NUZ_WHITEOUT_DELETE);
-    // }
-    // else
-    // {
-    //     FlagClear(FLAG_NUZ_WHITEOUT_DELETE);
-    // }
+    if (gSaveBlock2Ptr->nuzOptionsDeleteWO == 0)
+    {
+        FlagSet(FLAG_NUZ_WHITEOUT_DELETE);
+    }
+    else
+    {
+        FlagClear(FLAG_NUZ_WHITEOUT_DELETE);
+    }
 
-    // if (gSaveBlock2Ptr->nuzOptionsDeleteWOPlus == 0)
-    // {
-    //     FlagSet(FLAG_NUZ_WHITEOUT_DELETE_PLUS);
-    // }
-    // else
-    // {
-    //     FlagClear(FLAG_NUZ_WHITEOUT_DELETE_PLUS);
-    // }
+    if (gSaveBlock2Ptr->nuzOptionsDeleteWOPlus == 0)
+    {
+        FlagSet(FLAG_NUZ_WHITEOUT_DELETE_PLUS);
+    }
+    else
+    {
+        FlagClear(FLAG_NUZ_WHITEOUT_DELETE_PLUS);
+    }
 
-    // if (gSaveBlock2Ptr->nuzOptionsStarterChoose == 1)
-    // {
-    //     FlagSet(FLAG_CHOOSE_STARTER);
-    // }
-    // else
-    // {
-    //     FlagClear(FLAG_CHOOSE_STARTER);
-    // }
+    if (gSaveBlock2Ptr->nuzOptionsStarterChoose == 1)
+    {
+        FlagSet(FLAG_CHOOSE_STARTER);
+    }
+    else
+    {
+        FlagClear(FLAG_CHOOSE_STARTER);
+    }
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
