@@ -123,7 +123,6 @@ static const u16 sStarterMon[STARTER_MON_COUNT] =
     SPECIES_TREECKO,
     SPECIES_TORCHIC,
     SPECIES_MUDKIP,
-    SPECIES_PIKACHU,
 };
 
 static const struct BgTemplate sBgTemplates[3] =
@@ -383,35 +382,32 @@ static void VblankCB_StarterChoose(void)
 
 void CB2_ChooseStarter(void)
 {
-    // Does the player want to choose their own starter? 
-    if (!FlagGet(FLAG_CHOOSE_STARTER))
+    // Get Last digit of the trainer's ID
+    u8 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
+    // Does the player want to choose their own starter?
+    // Also let player choose if their trainer ID ends in zero 
+    if (!FlagGet(FLAG_CHOOSE_STARTER) || (lastDigit == 0))
     {
-        // Get Last digit of the trainer's ID
-        u8 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
         MgbaPrintf(MGBA_LOG_INFO, "%d", lastDigit);
         u16 pokemonChosen;
 
-        lastDigit = 5;
         MgbaPrintf(MGBA_LOG_INFO, "new lastDigit: %d", lastDigit);
         // Chose pokemon based on the digit 
         if (lastDigit < 4 && lastDigit > 0)
         {
             MgbaPrintf(MGBA_LOG_INFO, "first");
-            pokemonChosen = 1;        }
+            pokemonChosen = 0;        
+        }
         else if (lastDigit < 7)
         {
             MgbaPrintf(MGBA_LOG_INFO, "2nd");
-            pokemonChosen = 2;        }
-        else if (lastDigit < 10)
-        {
-            MgbaPrintf(MGBA_LOG_INFO, "3rd");
-            pokemonChosen = 0;        }
+            pokemonChosen = 1;        
+        }
         else
         {
-            MgbaPrintf(MGBA_LOG_INFO, "4th");
-            pokemonChosen = 4;
+            MgbaPrintf(MGBA_LOG_INFO, "3rd");
+            pokemonChosen = 2;        
         }
-
         
         gSpecialVar_Result = pokemonChosen;
         ResetAllPicSprites();
