@@ -5081,9 +5081,10 @@ static void HandleEndTurn_MonFled(void)
 static void HandleEndTurn_FinishBattle(void)
 {
     u32 i;
+
+    // Check if you have recieved your first pokeballs before checking
     if (FlagGet(FLAG_ADVENTURE_STARTED))
     {
-        MgbaPrintf(MGBA_LOG_INFO, "Triggered: %d", FlagGet(FLAG_ADVENTURE_STARTED));
         SetRegionToNoCatch(gMapHeader.regionMapSectionId);
     }
         
