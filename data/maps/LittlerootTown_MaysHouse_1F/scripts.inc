@@ -377,7 +377,7 @@ RivalsHouse_1F_Text_MayWhoAreYou:
 	.string "{PLAYER}{KUN}, and that we could be friends.\p"
 	.string "Oh, this is silly, isn't it?\n"
 	.string "I… I've just met you, {PLAYER}{KUN}.\p"
-	.string "Eheheh…\p"
+	.string "Eheheh… UwU\p"
 	.string "Oh, no! I forgot!\p"
 	.string "I was supposed to go help Dad catch\n"
 	.string "some wild POKéMON!\p"
