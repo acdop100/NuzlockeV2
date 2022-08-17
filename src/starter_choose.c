@@ -15,6 +15,7 @@
 #include "sprite.h"
 #include "starter_choose.h"
 #include "strings.h"
+#include "string_util.h"
 #include "task.h"
 #include "text.h"
 #include "text_window.h"
@@ -24,6 +25,7 @@
 #include "constants/songs.h"
 #include "constants/rgb.h"
 #include "constants/flags.h"
+#include "mgba_printf/mgba.h"
 
 #define STARTER_MON_COUNT   3
 
@@ -121,6 +123,7 @@ static const u16 sStarterMon[STARTER_MON_COUNT] =
     SPECIES_TREECKO,
     SPECIES_TORCHIC,
     SPECIES_MUDKIP,
+    SPECIES_PIKACHU,
 };
 
 static const struct BgTemplate sBgTemplates[3] =
@@ -356,6 +359,7 @@ static const struct SpriteTemplate sSpriteTemplate_StarterCircle =
 // .text
 u16 GetStarterPokemon(u16 chosenStarterId)
 {
+    MgbaPrintf(MGBA_LOG_INFO, "I am GetStarterPokemon");
     if (chosenStarterId > STARTER_MON_COUNT)
         chosenStarterId = 0;
     return sStarterMon[chosenStarterId];
@@ -380,30 +384,35 @@ static void VblankCB_StarterChoose(void)
 void CB2_ChooseStarter(void)
 {
     // Does the player want to choose their own starter? 
-    if (FlagGet(FLAG_CHOOSE_STARTER))
+    if (!FlagGet(FLAG_CHOOSE_STARTER))
     {
         // Get Last digit of the trainer's ID
-        u16 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 1;
+        u8 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
+        MgbaPrintf(MGBA_LOG_INFO, "%d", lastDigit);
         u16 pokemonChosen;
 
+        lastDigit = 5;
+        MgbaPrintf(MGBA_LOG_INFO, "new lastDigit: %d", lastDigit);
         // Chose pokemon based on the digit 
-        if (lastDigit < 4)
+        if (lastDigit < 4 && lastDigit > 0)
         {
-            pokemonChosen = SPECIES_TREECKO;
-        }
+            MgbaPrintf(MGBA_LOG_INFO, "first");
+            pokemonChosen = 1;        }
         else if (lastDigit < 7)
         {
-            pokemonChosen = SPECIES_TORCHIC;
-        }
+            MgbaPrintf(MGBA_LOG_INFO, "2nd");
+            pokemonChosen = 2;        }
         else if (lastDigit < 10)
         {
-            pokemonChosen = SPECIES_MUDKIP;
-        }
+            MgbaPrintf(MGBA_LOG_INFO, "3rd");
+            pokemonChosen = 0;        }
         else
         {
-            pokemonChosen = SPECIES_PIKACHU;
+            MgbaPrintf(MGBA_LOG_INFO, "4th");
+            pokemonChosen = 4;
         }
 
+        
         gSpecialVar_Result = pokemonChosen;
         ResetAllPicSprites();
         SetMainCallback2(gMain.savedCallback);
@@ -511,6 +520,7 @@ static void CB2_StarterChoose(void)
 
 static void Task_StarterChoose(u8 taskId)
 {
+
     CreateStarterPokemonLabel(gTasks[taskId].tStarterSelection);
     DrawStdFrameWithCustomTileAndPalette(0, FALSE, 0x2A8, 0xD);
     AddTextPrinterParameterized(0, FONT_NORMAL, gText_BirchInTrouble, 0, 1, 0, NULL);

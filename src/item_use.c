@@ -985,16 +985,6 @@ static const u8 sText_CantThrowPokeBall_NoneLeft[] = _("You can only catch the\n
 static const u8 sText_CantThrowPokeBall_SemiInvulnerable[] = _("Cannot throw a ball!\nThere's no Pokémon in sight!\p");
 void ItemUseInBattle_PokeBall(u8 taskId)
 {
-    // u8 arrLen = sizeof(regionMapSectionCaughtMon)/regionMapSectionCaughtMon[0];
-    // u8 alreadyCaught = 0;
-    // u8 i = 0;
-    // for (i; i < arrLen; i++) {
-    //     if (regionMapSectionCaughtMon[gMapHeader.regionMapSectionId] == 1) {
-    //         alreadyCaught = 1;
-    //         break;
-    //     }
-    // }
-
     switch (GetBallThrowableState())
     {
     case BALL_THROW_ABLE:
