@@ -986,7 +986,7 @@ static u32 GetBallThrowableState(void)
         return BALL_THROW_UNABLE_TWO_MONS;
     else if (IsPlayerPartyAndPokemonStorageFull() == TRUE)
         return BALL_THROW_UNABLE_NO_ROOM;
-    else if (HasCaughtMonInRegion(gMapHeader.regionMapSectionId) == TRUE && FlagGet(FLAG_NUZ_SINGLE_CATCH))
+    else if (HasCaughtMonInRegion(gMapHeader.regionMapSectionId) == TRUE && (gSaveBlock2Ptr->nuzOptionsSingleCatch == 0))
         return BALL_THROW_UNABLE_NONE_LEFT;
 #if B_SEMI_INVULNERABLE_CATCH >= GEN_4
     else if (gStatuses3[GetCatchingBattler()] & STATUS3_SEMI_INVULNERABLE)

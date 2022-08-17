@@ -386,7 +386,9 @@ void CB2_ChooseStarter(void)
     u8 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
     // Does the player want to choose their own starter?
     // Also let player choose if their trainer ID ends in zero 
-    if (!FlagGet(FLAG_CHOOSE_STARTER) || (lastDigit == 0))
+    MgbaPrintf(MGBA_LOG_INFO, "Flag: %d", FlagGet(FLAG_CHOOSE_STARTER));
+    MgbaPrintf(MGBA_LOG_INFO, "saveblock: %d", gSaveBlock2Ptr->nuzOptionsStarterChoose);
+    if ((gSaveBlock2Ptr->nuzOptionsStarterChoose == 1) || (lastDigit == 0))
     {
         MgbaPrintf(MGBA_LOG_INFO, "%d", lastDigit);
         u16 pokemonChosen;

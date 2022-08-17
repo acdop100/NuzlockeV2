@@ -64,7 +64,7 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "cable_club.h"
-
+#include "mgba_printf/mgba.h"
 extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
 
 extern const struct BgTemplate gBattleBgTemplates[];
@@ -5081,8 +5081,12 @@ static void HandleEndTurn_MonFled(void)
 static void HandleEndTurn_FinishBattle(void)
 {
     u32 i;
-    SetRegionToNoCatch(gMapHeader.regionMapSectionId);
-
+    if (FlagGet(FLAG_ADVENTURE_STARTED))
+    {
+        MgbaPrintf(MGBA_LOG_INFO, "Triggered: %d", FlagGet(FLAG_ADVENTURE_STARTED));
+        SetRegionToNoCatch(gMapHeader.regionMapSectionId);
+    }
+        
     if (gCurrentActionFuncId == B_ACTION_TRY_FINISH || gCurrentActionFuncId == B_ACTION_FINISHED)
     {
         if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK

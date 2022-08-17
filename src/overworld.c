@@ -377,7 +377,7 @@ void DoWhiteOut(void)
         }
     }
 
-    if ((anyPokemonLeft == FALSE && FlagGet(FLAG_NUZ_WHITEOUT_DELETE)) || (FlagGet(FLAG_NUZ_WHITEOUT_DELETE_PLUS)))
+    if ((anyPokemonLeft == FALSE && (gSaveBlock2Ptr->nuzOptionsDeleteWO == 0)) || ((gSaveBlock2Ptr->nuzOptionsDeleteWOPlus == 0)))
     {
         ClearSaveData();
         ResetSafariZoneFlag();

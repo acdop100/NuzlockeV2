@@ -59,6 +59,7 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "battle_util.h"
+#include "mgba_printf/mgba.h"
 
 extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
 
@@ -3638,10 +3639,12 @@ static void Cmd_tryfaintmon(void)
             gBattlescriptCurrInstr = BS_ptr;
             if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
             {
+                MgbaPrintf(MGBA_LOG_INFO, "Flag: %d", FlagGet(FLAG_NUZ_FAINT_DELETE));
+                MgbaPrintf(MGBA_LOG_INFO, "saveblock: %d", gSaveBlock2Ptr->nuzOptionsDeleteMon);
                 gHitMarker |= HITMARKER_PLAYER_FAINTED;
                 if (gBattleResults.playerFaintCounter < 255)
                     gBattleResults.playerFaintCounter++;
-                if (FlagGet(FLAG_NUZ_FAINT_DELETE))
+                if (gSaveBlock2Ptr->nuzOptionsDeleteMon == 0)
                 {
                     ZeroMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]]);
                 }
