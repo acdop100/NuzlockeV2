@@ -24,6 +24,7 @@ enum
     TD_MENUSELECTION,
     TD_DELETEMON,
     TD_DELETEWO,
+    TD_DELETEWOPLUS,
     TD_STARTERCHOOSE,
     TD_SINGLECATCH,
 };
@@ -33,6 +34,7 @@ enum
 {
     MENUITEM_DELETEMON,
     MENUITEM_DELETEWO,
+    MENUITEM_DELETEWOPLUS,
     MENUITEM_SINGLECATCH,
     MENUITEM_STARTERCHOOSE,
     MENUITEM_CANCEL,
@@ -48,6 +50,7 @@ enum
 
 #define YPOS_DELETEMON      (MENUITEM_DELETEMON * 16)
 #define YPOS_DELETEWO       (MENUITEM_DELETEWO * 16)
+#define YPOS_DELETEWOPLUS   (MENUITEM_DELETEWOPLUS * 16)
 #define YPOS_SINGLECATCH    (MENUITEM_SINGLECATCH * 16)
 #define YPOS_STARTERCHOOSE  (MENUITEM_STARTERCHOOSE * 16)
 #define YPOS_FRAMETYPE      (MENUITEM_FRAMETYPE * 16)
@@ -60,6 +63,8 @@ static void Task_OptionMenuFadeOut(u8 taskId);
 static void HighlightOptionMenuItem(u8 selection);
 static u8   DeleteWO_ProcessInput(u8 selection);
 static void DeleteWO_DrawChoices(u8 selection);
+static u8   DeleteWOPlus_ProcessInput(u8 selection);
+static void DeleteWOPlus_DrawChoices(u8 selection);
 static u8   DeleteMon_ProcessInput(u8 selection);
 static void DeleteMon_DrawChoices(u8 selection);
 static u8   SingleCatch_ProcessInput(u8 selection);
@@ -80,6 +85,7 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 {
     [MENUITEM_DELETEMON]        = gText_FaintDelete,
     [MENUITEM_DELETEWO]         = gText_WODelete,
+    [MENUITEM_DELETEWOPLUS]     = gText_WOPlusDelete,
     [MENUITEM_SINGLECATCH]      = gText_SingleCatch,
     [MENUITEM_STARTERCHOOSE]    = gText_StarterChoose,
     [MENUITEM_CANCEL]           = gText_OptionMenuCancel,
@@ -229,12 +235,14 @@ void CB2_InitNuzlockeOptionMenu(void)
         gTasks[taskId].data[TD_MENUSELECTION] = 0;
         gTasks[taskId].data[TD_DELETEMON] = gSaveBlock2Ptr->nuzOptionsDeleteMon;
         gTasks[taskId].data[TD_DELETEWO] = gSaveBlock2Ptr->nuzOptionsDeleteWO;
+        gTasks[taskId].data[TD_DELETEWOPLUS] = gSaveBlock2Ptr->nuzOptionsDeleteWOPlus;
         gTasks[taskId].data[TD_SINGLECATCH] = gSaveBlock2Ptr->nuzOptionsSingleCatch;
-         gTasks[taskId].data[TD_STARTERCHOOSE] = gSaveBlock2Ptr->nuzOptionsStarterChoose;
+        gTasks[taskId].data[TD_STARTERCHOOSE] = gSaveBlock2Ptr->nuzOptionsStarterChoose;
 
         SingleCatch_DrawChoices(gTasks[taskId].data[TD_SINGLECATCH]);
         DeleteMon_DrawChoices(gTasks[taskId].data[TD_DELETEMON]);
         DeleteWO_DrawChoices(gTasks[taskId].data[TD_DELETEWO]);
+        DeleteWOPlus_DrawChoices(gTasks[taskId].data[TD_DELETEWOPLUS]);
         StarterChoose_DrawChoices(gTasks[taskId].data[TD_STARTERCHOOSE]);
         HighlightOptionMenuItem(gTasks[taskId].data[TD_MENUSELECTION]);
 
@@ -310,6 +318,13 @@ static void Task_OptionMenuProcessInput(u8 taskId)
             if (previousOption != gTasks[taskId].data[TD_DELETEWO])
                 DeleteWO_DrawChoices(gTasks[taskId].data[TD_DELETEWO]);
             break;
+        case MENUITEM_DELETEWOPLUS:
+            previousOption = gTasks[taskId].data[TD_DELETEWOPLUS];
+            gTasks[taskId].data[TD_DELETEWOPLUS] = DeleteWOPlus_ProcessInput(gTasks[taskId].data[TD_DELETEWOPLUS]);
+
+            if (previousOption != gTasks[taskId].data[TD_DELETEWOPLUS])
+                DeleteWOPlus_DrawChoices(gTasks[taskId].data[TD_DELETEWOPLUS]);
+            break;
         case MENUITEM_STARTERCHOOSE:
             previousOption = gTasks[taskId].data[TD_STARTERCHOOSE];
             gTasks[taskId].data[TD_STARTERCHOOSE] = StarterChoose_ProcessInput(gTasks[taskId].data[TD_STARTERCHOOSE]);
@@ -334,6 +349,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->nuzOptionsSingleCatch = gTasks[taskId].data[TD_SINGLECATCH];
     gSaveBlock2Ptr->nuzOptionsDeleteMon = gTasks[taskId].data[TD_DELETEMON];
     gSaveBlock2Ptr->nuzOptionsDeleteWO = gTasks[taskId].data[TD_DELETEWO];
+    gSaveBlock2Ptr->nuzOptionsDeleteWOPlus = gTasks[taskId].data[TD_DELETEWOPLUS];
     gSaveBlock2Ptr->nuzOptionsStarterChoose = gTasks[taskId].data[TD_STARTERCHOOSE];
 
     if (gSaveBlock2Ptr->nuzOptionsSingleCatch == 0)
@@ -361,6 +377,15 @@ static void Task_OptionMenuSave(u8 taskId)
     else
     {
         FlagClear(FLAG_NUZ_WHITEOUT_DELETE);
+    }
+
+    if (gSaveBlock2Ptr->nuzOptionsDeleteWOPlus == 0)
+    {
+        FlagSet(FLAG_NUZ_WHITEOUT_DELETE_PLUS);
+    }
+    else
+    {
+        FlagClear(FLAG_NUZ_WHITEOUT_DELETE_PLUS);
     }
 
     if (gSaveBlock2Ptr->nuzOptionsStarterChoose == 1)
@@ -501,6 +526,29 @@ static void DeleteWO_DrawChoices(u8 selection)
 
     DrawOptionMenuChoice(gText_NuzDeleteOnwhiteoutOn, 104, YPOS_DELETEWO, styles[0]);
     DrawOptionMenuChoice(gText_NuzDeleteOnwhiteoutOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_NuzDeleteOnwhiteoutOff, 198), YPOS_DELETEWO, styles[1]);
+}
+
+static u8 DeleteWOPlus_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void DeleteWOPlus_DrawChoices(u8 selection)
+{
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_NuzDeleteOnwhiteoutPlusOn, 104, YPOS_DELETEWOPLUS, styles[0]);
+    DrawOptionMenuChoice(gText_NuzDeleteOnwhiteoutPlusOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_NuzDeleteOnwhiteoutPlusOff, 198), YPOS_DELETEWOPLUS, styles[1]);
 }
 
 static void DrawTextOption(void)

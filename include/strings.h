@@ -42,12 +42,15 @@ extern const u8 gText_NuzDeleteMonOnFaintOn[];
 extern const u8 gText_NuzDeleteMonOnFaintOff[];
 extern const u8 gText_NuzDeleteOnwhiteoutOn[];
 extern const u8 gText_NuzDeleteOnwhiteoutOff[];
+extern const u8 gText_NuzDeleteOnwhiteoutPlusOn[];
+extern const u8 gText_NuzDeleteOnwhiteoutPlusOff[];
 extern const u8 gText_NuzSingleCatchOn[];
 extern const u8 gText_NuzSingleCatchOff[];
 extern const u8 gText_NuzStarterChooseOn[];
 extern const u8 gText_NuzStarterChooseOff[];
 extern const u8 gText_FaintDelete[];
 extern const u8 gText_WODelete[];
+extern const u8 gText_WOPlusDelete[];
 extern const u8 gText_SingleCatch[];
 extern const u8 gText_StarterChoose[];
 
