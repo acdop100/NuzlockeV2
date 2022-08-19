@@ -378,33 +378,30 @@ void CB2_ChooseStarter(void)
     u8 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
     // Does the player want to choose their own starter?
     // Also let player choose if their trainer ID ends in zero 
-    MgbaPrintf(MGBA_LOG_INFO, "Flag: %d", FlagGet(FLAG_CHOOSE_STARTER));
-    MgbaPrintf(MGBA_LOG_INFO, "saveblock: %d", gSaveBlock2Ptr->nuzOptionsStarterChoose);
-    MgbaPrintf(MGBA_LOG_INFO, "%d", lastDigit);
-    // Does the player want to choose their own starter? 
-    if (FlagGet(FLAG_CHOOSE_STARTER))
+    DebugPrintf("Flag: %d", FlagGet(FLAG_CHOOSE_STARTER));
+    DebugPrintf("saveblock: %d", gSaveBlock2Ptr->nuzOptionsStarterChoose);
+    DebugPrintf("%d", lastDigit);
+    if ((gSaveBlock2Ptr->nuzOptionsStarterChoose == 1))
     {
-        // Get Last digit of the trainer's ID
-        u16 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 1;
         u16 pokemonChosen;
-
         // Chose pokemon based on the digit 
-        if (lastDigit < 4)
-        {
-            pokemonChosen = SPECIES_TREECKO;
-        }
-        else if (lastDigit < 7)
-        {
-            pokemonChosen = SPECIES_TORCHIC;
-        }
-        else if (lastDigit < 10)
-        {
-            pokemonChosen = SPECIES_MUDKIP;
-        }
-        else
+        if (lastDigit == 0)
         {
             pokemonChosen = SPECIES_PIKACHU;
         }
+        else if (lastDigit <= 4)
+        {
+            pokemonChosen = SPECIES_TREECKO;
+        }
+        else if (lastDigit <= 7)
+        {
+            pokemonChosen = SPECIES_TORCHIC;
+        }
+        else
+        {
+            pokemonChosen = SPECIES_MUDKIP;
+        }
+        
 
         gSpecialVar_Result = pokemonChosen;
         ResetAllPicSprites();
