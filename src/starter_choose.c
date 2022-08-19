@@ -388,12 +388,10 @@ void CB2_ChooseStarter(void)
     // Also let player choose if their trainer ID ends in zero 
     MgbaPrintf(MGBA_LOG_INFO, "Flag: %d", FlagGet(FLAG_CHOOSE_STARTER));
     MgbaPrintf(MGBA_LOG_INFO, "saveblock: %d", gSaveBlock2Ptr->nuzOptionsStarterChoose);
-    if ((gSaveBlock2Ptr->nuzOptionsStarterChoose == 1) || (lastDigit == 0))
+    MgbaPrintf(MGBA_LOG_INFO, "%d", lastDigit);
+    if ((gSaveBlock2Ptr->nuzOptionsStarterChoose == 1) && (lastDigit != 0))
     {
-        MgbaPrintf(MGBA_LOG_INFO, "%d", lastDigit);
         u16 pokemonChosen;
-
-        MgbaPrintf(MGBA_LOG_INFO, "new lastDigit: %d", lastDigit);
         // Chose pokemon based on the digit 
         if (lastDigit < 4 && lastDigit > 0)
         {
