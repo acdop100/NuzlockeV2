@@ -3799,7 +3799,7 @@ static void Cmd_tryfaintmon(void)
                 gHitMarker |= HITMARKER_PLAYER_FAINTED;
                 if (gBattleResults.playerFaintCounter < 255)
                     gBattleResults.playerFaintCounter++;
-                if (FlagGet(FLAG_NUZ_FAINT_DELETE))
+                if (gSaveBlock2Ptr->nuzOptionsDeleteMon == 0)
                 {
                     ZeroMonData(&gPlayerParty[gBattlerPartyIndexes[battler]]);
                 }

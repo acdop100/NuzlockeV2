@@ -98,9 +98,9 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->regionMapZoom = FALSE;
     gSaveBlock2Ptr->nuzOptionsDeleteMon = OPTIONS_DELETE_MON_ON;
     gSaveBlock2Ptr->nuzOptionsDeleteWO = OPTIONS_DELETE_WO_ON;
-    gSaveBlock2Ptr->nuzOptionsDeleteWO = OPTIONS_DELETE_WO_PLUS_ON;
+    gSaveBlock2Ptr->nuzOptionsDeleteWOPlus = OPTIONS_DELETE_WO_PLUS_ON;
     gSaveBlock2Ptr->nuzOptionsSingleCatch = OPTIONS_SINGLE_CATCH_ON;
-    gSaveBlock2Ptr->nuzOptionsStarterChoose = OPTIONS_SINGLE_CATCH_OFF;
+    gSaveBlock2Ptr->nuzOptionsStarterChoose = OPTIONS_STARTER_CHOOSE_OFF;
 }
 
 static void ClearPokedexFlags(void)
