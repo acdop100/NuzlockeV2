@@ -340,6 +340,114 @@ static const u8 sMapHealLocations[][3] =
     [MAPSEC_ROUTE_134] = {MAP_GROUP(ROUTE134), MAP_NUM(ROUTE134), HEAL_LOCATION_NONE},
 };
 
+static EWRAM_DATA u8 sRegionMapSectionWhereCaught[] =
+{
+    [MAPSEC_LITTLEROOT_TOWN] = 0,
+    [MAPSEC_OLDALE_TOWN] = 0,
+    [MAPSEC_DEWFORD_TOWN] = 0,
+    [MAPSEC_LAVARIDGE_TOWN] = 0,
+    [MAPSEC_FALLARBOR_TOWN] = 0,
+    [MAPSEC_VERDANTURF_TOWN] = 0,
+    [MAPSEC_PACIFIDLOG_TOWN] = 0,
+    [MAPSEC_PETALBURG_CITY] = 0,
+    [MAPSEC_SLATEPORT_CITY] = 0,
+    [MAPSEC_MAUVILLE_CITY] = 0,
+    [MAPSEC_RUSTBORO_CITY] = 0,
+    [MAPSEC_FORTREE_CITY] = 0,
+    [MAPSEC_LILYCOVE_CITY] = 0,
+    [MAPSEC_MOSSDEEP_CITY] = 0,
+    [MAPSEC_SOOTOPOLIS_CITY] = 0,
+    [MAPSEC_EVER_GRANDE_CITY] = 0,
+    [MAPSEC_ROUTE_101] = 0,
+    [MAPSEC_ROUTE_102] = 0,
+    [MAPSEC_ROUTE_103] = 0,
+    [MAPSEC_ROUTE_104] = 0,
+    [MAPSEC_ROUTE_105] = 0,
+    [MAPSEC_ROUTE_106] = 0,
+    [MAPSEC_ROUTE_107] = 0,
+    [MAPSEC_ROUTE_108] = 0,
+    [MAPSEC_ROUTE_109] = 0,
+    [MAPSEC_ROUTE_110] = 0,
+    [MAPSEC_ROUTE_111] = 0,
+    [MAPSEC_ROUTE_112] = 0,
+    [MAPSEC_ROUTE_113] = 0,
+    [MAPSEC_ROUTE_114] = 0,
+    [MAPSEC_ROUTE_115] = 0,
+    [MAPSEC_ROUTE_116] = 0,
+    [MAPSEC_ROUTE_117] = 0,
+    [MAPSEC_ROUTE_118] = 0,
+    [MAPSEC_ROUTE_119] = 0,
+    [MAPSEC_ROUTE_120] = 0,
+    [MAPSEC_ROUTE_121] = 0,
+    [MAPSEC_ROUTE_122] = 0,
+    [MAPSEC_ROUTE_123] = 0,
+    [MAPSEC_ROUTE_124] = 0,
+    [MAPSEC_ROUTE_125] = 0,
+    [MAPSEC_ROUTE_126] = 0,
+    [MAPSEC_ROUTE_127] = 0,
+    [MAPSEC_ROUTE_128] = 0,
+    [MAPSEC_ROUTE_129] = 0,
+    [MAPSEC_ROUTE_130] = 0,
+    [MAPSEC_ROUTE_131] = 0,
+    [MAPSEC_ROUTE_132] = 0,
+    [MAPSEC_ROUTE_133] = 0,
+    [MAPSEC_ROUTE_134] = 0,
+    [MAPSEC_UNDERWATER_124] = 0,
+    [MAPSEC_UNDERWATER_126] = 0,
+    [MAPSEC_UNDERWATER_127] = 0,
+    [MAPSEC_UNDERWATER_128] = 0,
+    [MAPSEC_UNDERWATER_SOOTOPOLIS] = 0,
+    [MAPSEC_GRANITE_CAVE] = 0,
+    [MAPSEC_MT_CHIMNEY] = 0,
+    [MAPSEC_SAFARI_ZONE] = 0,
+    [MAPSEC_BATTLE_FRONTIER] = 0,
+    [MAPSEC_PETALBURG_WOODS] = 0,
+    [MAPSEC_RUSTURF_TUNNEL] = 0,
+    [MAPSEC_ABANDONED_SHIP] = 0,
+    [MAPSEC_NEW_MAUVILLE] = 0,
+    [MAPSEC_METEOR_FALLS] = 0,
+    [MAPSEC_METEOR_FALLS2] = 0,
+    [MAPSEC_MT_PYRE] = 0,
+    [MAPSEC_AQUA_HIDEOUT_OLD] = 0,
+    [MAPSEC_SHOAL_CAVE] = 0,
+    [MAPSEC_SEAFLOOR_CAVERN] = 0,
+    [MAPSEC_UNDERWATER_SEAFLOOR_CAVERN] = 0,
+    [MAPSEC_VICTORY_ROAD] = 0,
+    [MAPSEC_MIRAGE_ISLAND] = 0,
+    [MAPSEC_CAVE_OF_ORIGIN] = 0,
+    [MAPSEC_SOUTHERN_ISLAND] = 0,
+    [MAPSEC_FIERY_PATH] = 0,
+    [MAPSEC_FIERY_PATH2] = 0,
+    [MAPSEC_JAGGED_PASS] = 0,
+    [MAPSEC_JAGGED_PASS2] = 0,
+    [MAPSEC_SEALED_CHAMBER] = 0,
+    [MAPSEC_UNDERWATER_SEALED_CHAMBER] = 0,
+    [MAPSEC_SCORCHED_SLAB] = 0,
+    [MAPSEC_ISLAND_CAVE] = 0,
+    [MAPSEC_DESERT_RUINS] = 0,
+    [MAPSEC_ANCIENT_TOMB] = 0,
+    [MAPSEC_INSIDE_OF_TRUCK] = 0,
+    [MAPSEC_SKY_PILLAR] = 0,
+    [MAPSEC_SECRET_BASE] = 0,
+    [MAPSEC_DYNAMIC] = 0,
+    [MAPSEC_AQUA_HIDEOUT - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_MAGMA_HIDEOUT - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_MIRAGE_TOWER - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_BIRTH_ISLAND - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_FARAWAY_ISLAND - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_ARTISAN_CAVE - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_MARINE_CAVE - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_UNDERWATER_MARINE_CAVE - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_TERRA_CAVE - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_UNDERWATER_105 - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_UNDERWATER_125 - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_UNDERWATER_129 - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_DESERT_UNDERPASS - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_ALTERING_CAVE - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_NAVEL_ROCK - KANTO_MAPSEC_COUNT] = 0,
+    [MAPSEC_TRAINER_HILL - KANTO_MAPSEC_COUNT] = 0
+};
+
 static const u8 *const sEverGrandeCityNames[] =
 {
     gText_PokemonLeague,
@@ -616,6 +724,51 @@ bool8 LoadRegionMapGfx(void)
     }
     sRegionMap->initStep++;
     return TRUE;
+}
+
+void SetRegionToNoCatch(u16 mapSecId)
+{
+    sRegionMapSectionWhereCaught[mapSecId] = 1;
+}
+
+bool8 HasCaughtMonInRegion(u16 mapSecId)
+{
+    // u8 i = 0;
+    // u8 j = 0;
+    // u8 p = 0;
+
+    if (sRegionMapSectionWhereCaught[mapSecId] == 0)
+    {
+        return(FALSE);
+    }
+    else
+    {
+        return(TRUE);
+    }
+
+    // for (p; p < 6; p++)
+    // {
+    //     u16 species = GetMonData(&gPlayerParty[p], MON_DATA_SPECIES2);
+    //     if (species == SPECIES_NONE || species == SPECIES_EGG)
+    //             continue;
+    //         else
+    //             if (GetMonData(&gPlayerParty[p], MON_DATA_MET_LOCATION) == mapSecId)
+    //                 return(TRUE);
+    // }
+
+    // for (i; i < TOTAL_BOXES_COUNT; i++) 
+    // {
+    //     for (j; j < IN_BOX_COUNT; j++) 
+    //     {
+    //         u16 species = GetBoxMonDataAt(i, j, MON_DATA_SPECIES2);
+    //         if (species == SPECIES_NONE || species == SPECIES_EGG)
+    //             continue;
+    //         else
+    //             if (GetBoxMonDataAt(i, j, MON_DATA_MET_LOCATION) == mapSecId)
+    //                 return(TRUE);
+    //     }
+    // }
+    //return(FALSE);
 }
 
 void BlendRegionMap(u16 color, u32 coeff)

@@ -37,6 +37,7 @@
 #include "pokedex.h"
 #include "pokemon.h"
 #include "random.h"
+#include "region_map.h"
 #include "recorded_battle.h"
 #include "roamer.h"
 #include "safari_zone.h"
@@ -5352,6 +5353,7 @@ static void HandleEndTurn_MonFled(void)
 static void HandleEndTurn_FinishBattle(void)
 {
     u32 i, battler;
+    SetRegionToNoCatch(gMapHeader.regionMapSectionId);
 
     if (gCurrentActionFuncId == B_ACTION_TRY_FINISH || gCurrentActionFuncId == B_ACTION_FINISHED)
     {

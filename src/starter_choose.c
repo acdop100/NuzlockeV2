@@ -374,6 +374,13 @@ static void VblankCB_StarterChoose(void)
 
 void CB2_ChooseStarter(void)
 {
+    // Get Last digit of the trainer's ID
+    u8 lastDigit = (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
+    // Does the player want to choose their own starter?
+    // Also let player choose if their trainer ID ends in zero 
+    MgbaPrintf(MGBA_LOG_INFO, "Flag: %d", FlagGet(FLAG_CHOOSE_STARTER));
+    MgbaPrintf(MGBA_LOG_INFO, "saveblock: %d", gSaveBlock2Ptr->nuzOptionsStarterChoose);
+    MgbaPrintf(MGBA_LOG_INFO, "%d", lastDigit);
     // Does the player want to choose their own starter? 
     if (FlagGet(FLAG_CHOOSE_STARTER))
     {
