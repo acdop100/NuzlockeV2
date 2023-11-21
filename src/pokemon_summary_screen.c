@@ -315,6 +315,7 @@ static void DestroyMoveSelectorSprites(u8);
 static void SetMainMoveSelectorColor(u8);
 static void KeepMoveSelectorVisible(u8);
 static void SummaryScreen_DestroyAnimDelayTask(void);
+static void BufferStat(u8 *dst, s8 natureMod, u32 stat, u32 strId, u32 n);
 static void BufferIvOrEvStats(u8 mode);
 
 // const rom data
@@ -3567,7 +3568,7 @@ static void BufferIvOrEvStats(u8 mode)
 
 static void BufferStat(u8 *dst, s8 natureMod, u32 stat, u32 strId, u32 n)
 {
-    static const u8 sTextNatureDown[] = _("{COLOR}{09}");
+    static const u8 sTextNatureDown[] = _("{COLOR}{08}");
     static const u8 sTextNatureUp[] = _("{COLOR}{05}");
     static const u8 sTextNatureNeutral[] = _("{COLOR}{01}");
     u8 *txtPtr;
@@ -3606,7 +3607,7 @@ static void BufferLeftColumnStats(void)
 
 static void PrintLeftColumnStats(void)
 {
-    SummaryScreen_PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_STATS_LEFT), gStringVar4, 4, 1, 0, 0);
+    PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_STATS_LEFT), gStringVar4, 4, 1, 0, 0);
 }
 
 static void BufferRightColumnStats(void)
