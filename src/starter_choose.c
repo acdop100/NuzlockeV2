@@ -25,7 +25,7 @@
 #include "constants/rgb.h"
 #include "constants/flags.h"
 
-#define STARTER_MON_COUNT   3
+#define STARTER_MON_COUNT   4
 
 // Position of the sprite of the selected starter Pokemon
 #define STARTER_PKMN_POS_X (DISPLAY_WIDTH / 2)
@@ -116,6 +116,7 @@ static const u16 sStarterMon[STARTER_MON_COUNT] =
     SPECIES_TREECKO,
     SPECIES_TORCHIC,
     SPECIES_MUDKIP,
+    SPECIES_PICHU,
 };
 
 static const struct BgTemplate sBgTemplates[3] =
@@ -387,19 +388,19 @@ void CB2_ChooseStarter(void)
         // Chose pokemon based on the digit 
         if (lastDigit == 0)
         {
-            pokemonChosen = SPECIES_PIKACHU;
+            pokemonChosen = 3;
         }
         else if (lastDigit <= 4)
         {
-            pokemonChosen = SPECIES_TREECKO;
+            pokemonChosen = 0;
         }
         else if (lastDigit <= 7)
         {
-            pokemonChosen = SPECIES_TORCHIC;
+            pokemonChosen = 1;
         }
         else
         {
-            pokemonChosen = SPECIES_MUDKIP;
+            pokemonChosen = 2;
         }
         
 
