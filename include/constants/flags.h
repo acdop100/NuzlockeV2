@@ -1223,7 +1223,7 @@
 #define FLAG_NUZ_SINGLE_CATCH                                       0x495 
 #define FLAG_CHOOSE_STARTER                                         0x496 
 #define FLAG_NUZ_WHITEOUT_DELETE_PLUS                               0x497
-#define FLAG_UNUSED_0x498                                           0x498 // Unused Flag
+#define FLAG_POKEMONPCMENU                                          0x498
 #define FLAG_UNUSED_0x499                                           0x499 // Unused Flag
 #define FLAG_UNUSED_0x49A                                           0x49A // Unused Flag
 #define FLAG_UNUSED_0x49B                                           0x49B // Unused Flag
