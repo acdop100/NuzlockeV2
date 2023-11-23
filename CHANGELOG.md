@@ -68,3 +68,12 @@ nuzlock_options_menu.c:
 
 strings.c:
 - Added strings for nuzlocke options menu
+
+- Added global PC access
+- Changed Day/Night cycles https://github.com/pret/pokeemerald/wiki/Change-Time-Based-Evolution-Times
+- Ability to fly from pokemon moves menu
+- Upgraded audio engine
+- Faster healing
+- Catch both Latios and Latias
+- Press B to hover "run" in wild battle
+- Other misc. changes and fixes

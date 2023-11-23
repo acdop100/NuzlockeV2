@@ -26,6 +26,9 @@
 #include "expansion_intro.h"
 #include "constants/rgb.h"
 #include "constants/battle_anim.h"
+#include "main_menu.h"
+#include "event_data.h"
+#include "constants/flags.h"
 
 /*
     The intro is grouped into the following scenes
@@ -1149,7 +1152,7 @@ static u8 SetUpCopyrightScreen(void)
 
 void CB2_InitCopyrightScreenAfterBootup(void)
 {
-    if (!SetUpCopyrightScreen())
+    if (gMain.state == 0)
     {
         SetSaveBlocksPointers(GetSaveBlocksPointersBaseOffset());
         ResetMenuAndMonGlobals();
@@ -1160,7 +1163,11 @@ void CB2_InitCopyrightScreenAfterBootup(void)
         SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
         InitHeap(gHeap, HEAP_SIZE);
     }
-}
+    if (FlagGet(FLAG_SKIP_INTRO))
+        CB2_InitMainMenu();
+    else
+        SetUpCopyrightScreen();
+    }
 
 void CB2_InitCopyrightScreenAfterTitleScreen(void)
 {

@@ -7,6 +7,7 @@ void InitRoamer(void);
 void UpdateLocationHistoryForRoamer(void);
 void RoamerMoveToOtherLocationSet(void);
 void RoamerMove(void);
+void NextRoamer(void);
 bool8 IsRoamerAt(u8 mapGroup, u8 mapNum);
 void CreateRoamerMonInstance(void);
 u8 TryStartRoamerEncounter(void);
