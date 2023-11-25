@@ -170,8 +170,8 @@ Route103_Text_AndrewPostBattle:
 	.string "Grrrrr…$"
 
 Route103_Text_MiguelIntro:
-	.string "My POKéMON is delightfully adorable!\n"
-	.string "Don't be shy--I'll show you!$"
+	.string "I'm going to collect so many\n"
+	.string "POKéMON Funko Pops!$"
 
 Route103_Text_MiguelDefeated:
 	.string "Oh, my gosh!\n"
